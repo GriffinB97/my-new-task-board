@@ -9,8 +9,31 @@ body {
 
 .task-card {
   margin: 0 auto;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.task-card.near-deadline {
+  background-color: yellow;
+}
+
+.task-card.overdue {
+  background-color: red;
+  color: white;
 }
 
 .task-card:hover {
   cursor: grab;
+}
+
+.task-delete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  color: red;
+  cursor: pointer;
 }
