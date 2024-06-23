@@ -7,6 +7,12 @@ function generateTaskId() {
   return nextId++;
 }
 
+// Save the task list and nextId to localStorage
+function saveToLocalStorage() {
+  localStorage.setItem('tasks', JSON.stringify(taskList));
+  localStorage.setItem('nextId', JSON.stringify(nextId));
+}
+
 // Create a task card
 function createTaskCard(task) {
   let taskCard = $('<div>')
@@ -66,8 +72,7 @@ function handleAddTask(event) {
   };
 
   taskList.push(newTask);
-  localStorage.setItem('tasks', JSON.stringify(taskList));
-  localStorage.setItem('nextId', JSON.stringify(nextId));
+  saveToLocalStorage();
 
   renderTaskList();
   $('#formModal').modal('hide');
@@ -78,7 +83,7 @@ function handleAddTask(event) {
 function handleDeleteTask(event) {
   let taskId = $(event.target).closest('.task-card').data('id');
   taskList = taskList.filter(task => task.id !== taskId);
-  localStorage.setItem('tasks', JSON.stringify(taskList));
+  saveToLocalStorage();
 
   renderTaskList();
 }
@@ -86,11 +91,11 @@ function handleDeleteTask(event) {
 // Handle dropping a task into a new status lane
 function handleDrop(event, ui) {
   let taskId = ui.draggable.data('id');
-  let newStatus = $(event.target).attr('id');
+  let newStatus = $(event.target).closest('.lane').attr('id').split('-')[0];
 
   let task = taskList.find(task => task.id === taskId);
   task.status = newStatus;
-  localStorage.setItem('tasks', JSON.stringify(taskList));
+  saveToLocalStorage();
 
   renderTaskList();
 }
